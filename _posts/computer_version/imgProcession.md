@@ -81,13 +81,13 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/compu
 pixel brightness transformations 像素亮度变换，其变化只取决于像素本身，其包括两种：
    - Brightness Corrections：仅考虑图像中原来的亮度及像素位置；
    - Gray Scale Transformations（灰度变换） ：改变像素亮度时和像素在图中的位置无关。对于输入图象$f(x，y)$，输出图像$g(x，y)$，$T(in)$为灰度变换函数，则$g(x，y)=T( f(x，y) )$。
-     - 主要目的：
-       - 改善画质，使图像显示效果更加清晰
-       - 有选择性地突出图像中感兴趣的特征或抑制某些不需要的特征，使图像与视觉响应特征相匹配（图像增强）
-     - 主要应用：
-       - 图像求反：这种方法适用于增强嵌入图像暗色区域的白色或灰色细节。
-       - 对比度拉伸；
-       - 图像灰度分割（二值化）：在图像处理领域，二值图像运算量小，并且能够体现图像的关键特征，因此被广泛使用。
+        - 主要目的：
+             - 改善画质，使图像显示效果更加清晰
+             - 有选择性地突出图像中感兴趣的特征或抑制某些不需要的特征，使图像与视觉响应特征相匹配（图像增强）
+        - 主要应用：
+             - 图像求反：这种方法适用于增强嵌入图像暗色区域的白色或灰色细节。
+             - 对比度拉伸；
+             - 图像灰度分割（二值化）：在图像处理领域，二值图像运算量小，并且能够体现图像的关键特征，因此被广泛使用。
 
 ### 图像增强
 
@@ -95,12 +95,18 @@ pixel brightness transformations 像素亮度变换，其变化只取决于像�
 通过灰度变换将一幅图像转换为另一幅具有均衡直方图的图像，即在一定灰度范围内具有相同的象素点数的图像的过程。通过这种方法，亮度可以更好地在直方图上分布。这样就可以用于增强局部的对比度而不影响整体的对比度，直方图均衡化通过有效地扩展常用的亮度来实现这种功能。
 这种方法对于背景和前景都太亮或者太暗的图像非常有用，这种方法尤其是可以带来X光图像中更好的骨骼结构显示以及曝光过度或者曝光不足照片中更好的细节。这种方法的一个主要优势是它是一个相当直观的技术并且是可逆操作，如果已知均衡化函数，那么就可以恢复原始的直方图，并且计算量也不大。
 这种方法的一个缺点是它对处理的数据不加选择，它可能会增加背景噪声的对比度并且降低有用信号的对比度。
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/57057553.jpg)
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/57057553.jpg" width="90%">
+</div>
 
 #### 直方图匹配
 直方图规定化（histogram specification）又称直方图匹配，是指使一幅图像的直方图变成规定形状的直方图而对图像进行变换的增强方法。就是通过一个灰度映像函数，将原灰度直方图改造成所希望的直方图。所以，直方图修正的关键就是灰度映像函数。
 直方图规定化原理是对两个直方图都做均衡化，变成相同的归一化的均匀直方图。以此均匀直方图起到媒介作用，再对参考图像做均衡化的逆运算即可。直方图均衡化是直方图规定化的桥梁。
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/90622666.jpg)
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/90622666.jpg" width="90%">
+</div>
 
 #### 局部增强
 Local preprocessiong 也称为filtering，根据图像处理的目的分为两类：
@@ -117,7 +123,10 @@ Local preprocessiong 也称为filtering，根据图像处理的目的分为两�
 
   与低通滤波不同的是，中值滤波对脉冲噪声有良好的滤除作用，特别是在滤除噪声的同时，**能够保护信号的边缘，使之不被模糊**，但它会洗去均匀介质区域中的纹理。这些优良特性是线性滤波方法所不具有的。
   中值滤波能减弱或消除傅里叶空间的高频分量，同时也影响低频分量。中值滤波去除噪声的效果依赖于两个要素：邻域的空间范围和中值计算中涉及的像素数。一般说来，小于滤波器面积一半的亮或暗的物体基本上会被滤除，而较大的物体几乎会原封不动地保存下来，因此中值滤波器的空间尺寸必须根据现有的问题来进行调整。
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/25880713.jpg)
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/25880713.jpg" width="90%">
+</div>
 
 - Maximum and Minimum Filters极大极小滤波器
 极大值极小值滤波器是两个串联滤波器，可以用于消除椒盐噪声。极大值滤波器移除pepper-type（小值）噪声，极小值滤波器移除salt-type（大值）噪声。
@@ -143,7 +152,9 @@ $$
 \triangledown^{2}f= f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1)-4f(x,y)
 $$
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/20812166.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/20812166.jpg" width="90%">
+</div>
 
 由于拉普拉斯是一种微分算子，因此其应用强调的是图像中的灰度突变，并不强调灰度级缓慢变化的区域。
 将原图像和拉普拉斯图像叠加在一起的简单方法，可以复原背景特性并保持拉普拉斯锐化处理的效果。
@@ -170,7 +181,9 @@ $$
 
 高频提升滤波器是图像处理的基础工具，常用于印刷出版业。
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/2387564.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/2387564.jpg" width="90%">
+</div>
 
 带通滤波器移除选择的频带，用于图像重建，不用于图像增强
 
@@ -215,7 +228,9 @@ $$
 
 频域增强操作：
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/34598712.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/34598712.jpg" width="90%">
+</div>
 
 频域滤波器分类：
 
@@ -230,7 +245,9 @@ $$
 H(u,v)=\frac{1}{1+(\frac{D(u,v)}{D_{0}})^{2n}}
 $$
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/55623921.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/55623921.jpg" width="90%">
+</div>
 
 - n越大，Butterworth低通滤波器越接近于理想低通滤波器，但会出现振铃效应
 - 其有3db不变性
@@ -242,13 +259,17 @@ $$
 H(u,v)=e^{\frac{-D^{2}(u,v)}{2\sigma ^{2}}}
 $$
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/13819824.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/13819824.jpg" width="90%">
+</div>
 
 - $D_{0}$越小，越接近理想低通滤波器
 
 低通滤波器应用：平滑印刷字体
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/90373906.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/90373906.jpg" width="90%">
+</div>
 
 ###### Butterworth高通滤波器
 
@@ -259,9 +280,9 @@ $$
 
 和低通滤波器正好相反。增加一个常数项保存低频部分信息。
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/50235930.jpg)
-
-
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/50235930.jpg" width="90%">
+</div>
 
 ###### Gaussian高通滤波器
 
@@ -322,7 +343,9 @@ $$
 
 在建立高斯金字塔的时候，首先会将影像转换为尺度空间的表示方式，亦即乘上不同大小的高斯函数，之后再依据取定的尺度向下取样。 乘上的高斯函数大小和向下取样的频率通常会选为2的幂次，也就是说，在每次迭代的过程中，影像都会被乘上一个固定大小的高斯函数，并且被以长宽各0.5的比率被向下取样。 如果将向下取样过程的图片一张一张叠在一起，会呈现一个金字塔的样子，因此这个过程称为高斯金字塔。 
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/98042535.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/98042535.jpg" width="75%">
+</div>
 
 高斯金字塔使用：
 
@@ -350,15 +373,18 @@ $$
 $$
 图像的照射分量通常由慢的空间变化来表征，而反射分量往往引起突变，特别是在不同物体的连接部分。这些特性导致图像取对数后的傅里叶变换的低频成分与照射相联系，而高频成分与反射相联系。  
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/672660.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/672660.jpg" width="50%">
+</div>
 
 使用同态滤波器可以更好地控制照射分量和反射分量。这种控制器需要指定一个滤波器函数$H(u,v)$，它可用不同的可控方法影响傅里叶变换的低频和高频。如果$γL$和$γH$选定，而$γL<1$且$γH>1$，那么滤波器函数趋近于衰减低频（照射）的贡献，而增强高频反射的贡献。最终结果是同时进行动态范围抑制低频，增强对比度。  
 
 使用同态滤波器步骤：
 
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/62116892.jpg)
-
-![](https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/56382828.jpg)
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/62116892.jpg" width="50%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/56382828.jpg" width="50%">
+</div>
 
 同态滤波是一个比较经典的算法，有论文说可以去雾。但对水中图像效果确是极好的。另外同态滤波主要用于预处理阶段去除光照不均的影响，这用顶帽变化也可以的。 
 

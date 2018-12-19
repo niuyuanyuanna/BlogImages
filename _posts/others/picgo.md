@@ -26,11 +26,9 @@ qshell是七牛云进行Bucket管理的工具，现在支持windows系统，在�
 
 电脑运行cmd，将目录切换到qshell解压路径下，如我的解压路径为：`E:\UnusualSoftwares\qshell-v2.3.4`切换到该目录后，运行qshell，这里需要把对应版本的`.exe`文件改名为`qshell.exe`然后再运行qshell，否则是没有安装成功的。
 
-执行`qshell.exe`后得到下面信息
+执行`qshell.exe`后得到下面信息：
 
-·```
-
-```
+```shell
 E:\UnusualSoftwares\qshell-v2.3.4>qshell.exe
 Qiniu commandline tool for managing your bucket and CDN
 
@@ -112,7 +110,7 @@ Use "qshell [command] --help" for more information about a command.
 
 1. 在七牛云查找到自己的AK和SK，粘贴到命令：
 
-```
+```shell
 qshell account ak sk
 ```
 
@@ -121,13 +119,14 @@ qshell account ak sk
 
 - 这里首先需要导出原Bucket中的图片list，使用命令：
 
-```
+```shell
 qshell listbucket originBucket localFileName.txt
 ```
 
 保存到本地的文件里包括空间中的文件名和文件的各种参数，需要使用编辑器打开（记事本打开会错行），然后把文件名以外的参数全部删掉，只保留文件名，一行一行的排列。
 
 因为windows的cmd没有cat命令，那就写个python脚本把后面的删掉好了。
+
 ```python
 def deal_with_file(file_in, file_out):
     with open(file_in, 'r') as fin:
@@ -141,13 +140,13 @@ def deal_with_file(file_in, file_out):
 
 - 执行命令，将list中的file都复制到newBucket中：
 
-```
+```shell
 qshell batchcopy originBucket newBucket cleanedLocalFileName.txt
 ```
 
 - 在`qshell.exe`根目录新建`qshell.conf`文件
 
-```
+```json
 {
 	    "dest_dir"  :   "./qiniu",	// 文件下载所保存的目录
 	    "bucket"    :   "newBucket",	// 空间名
@@ -161,7 +160,7 @@ qshell batchcopy originBucket newBucket cleanedLocalFileName.txt
 
 - 执行命令，将newBucket中的文件下载到本地：
 
-```
+```shell
 qshell qdownload 10 qshell.conf	  	// `10` 为下载的并发协程数量
 ```
 
