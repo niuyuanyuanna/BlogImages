@@ -5,7 +5,7 @@ tags:
 - CV
 - object detection
 categories: Computer Version
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.jpeg
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.png
 ---
 # 物体检测R-CNN介绍
 ## R-CNN
@@ -25,7 +25,10 @@ R-CNN的检测过程主要分为四个步骤：
 - bounding-box regression精细修正RoI位置。
 
 其整体识别流程如下图所示：
+
+<div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/83769262.jpg" alt="R-CNN" title="R-CNN" width=75%/>
+</div>
 
 #### Selective Search
 
@@ -57,7 +60,10 @@ R-CNN的检测过程主要分为四个步骤：
 ##### CNN
 
 将所有变形后的region输入到CNN中，网络结构为Hinton 2012年在Image Net上的分类网络AlexNet，其网络结构为：
+
+<div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/66806389.jpg" alt="AlexNet" title="AlexNet" width=75% />
+</div>
 
 AlexNet使用了两块GPU训练神经网络。此网络提取的特征为4096维，之后送入一个4096->1000的全连接(fc)层进行分类。  学习率0.01。 
 训练的过程分为两步：
@@ -113,7 +119,6 @@ F1: precision和recall的综合指标                                  F1 = 2×
 4. 回归器
 
 在R-CNN中，对每一类目标，使用一个线性脊回归器进行精修。正则项$\lambda=10000$。  输入为深度网络pool5层的4096维特征，输出为xy方向的缩放和平移。  判定为本类的候选框中，和真值重叠面积大于0.6的候选框为正样本。
-
 
 
 ### 优缺点分析

@@ -1,11 +1,12 @@
 ---
-title: Two-Stream Convolutional Networks for Action Recognition in Videos笔记
+title: Two-Stream Convolutional Networks for Action Recognition in Videos论文笔记
 date: 2018-12-18 20:28:24
+tags:
 - 计算机视觉
 - Action Recognition
 - 论文笔记
 categories: Computer Version
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.jpeg
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.png
 ---
 
 # Two-Stream Convolutional Networks for Action Recognition in Videos论文笔记
@@ -214,5 +215,71 @@ class score fusion考虑两种融合方案：一种是训练多分类的线性SV
 ### 光流分支
 
 输入为**一些连续视频帧的堆叠光流位移场**
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/OpticalFlow.png" width="90%">
+</div>
+1. (a)表示前一帧图像，(b)表示后一帧图像
+2. (c)表示根据两帧图像计算出的Optical Flow
+3. (d)(e)分别表示displacement vector field的水平和竖直两部分
+
+#### 输入
+
+在第$\tau$帧的时候输入即为$I_\tau$，论文中介绍了两种获取$I_\tau$的方法，一种是Optical Flow Stacking（光流栈），另一种是Trajectory Stacking（轨迹叠加）
+
+- Optical Flow Stacking
+
+$I_\tau(u, v, c)$表示$(u,v)$这个位置的像素点的displacement vector（位移矢量），$c$的取值范围为1~2L，其中L表示vedio的帧数，因为有横纵两个方向的vector，因此范围为2L。水平方向和竖直方向的$I_\tau(u, v, c)$计算公式为：
+
+$$
+I_\tau(u, v, 2k-1) = d_{\tau + k -1}^{x}(u,v) \\
+I_\tau(u, v, 2k) =  d_{\tau + k -1}^{y}(u,v) \\
+u = [1;w] \quad v=[1;h] \quad k=[1;L]
+$$
+
+这种方法是光流的简单叠加。简单的来说就是计算每两帧之间的光流，然后简单的stacking。
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/OpticalFlowStacking.png" width="50%">
+</div>
+
+上面的图表示为
+
+- Trajectory Stacking
+
+轨迹叠加就是假设第一帧的某个像素点，我们可以通过光流来追踪它在视频中的轨迹。而简单的光流场叠加并没有追踪，每个都是计算的某帧$\tau + 1$中某个像素点P相对于$\tau$帧中对应像素点q的位移，光流场叠加最终得到的是每个像素点的两帧之间的光流图。
+$$
+I_\tau(u, v, 2k-1) = d_{\tau + k -1}^{x}(P_k) \\
+I_\tau(u, v, 2k) =  d_{\tau + k -1}^{y}(P_k) \\
+u = [1;w] \quad v=[1;h] \quad k=[1;L]
+$$
+
+其中$P_k$是轨迹中的第k个点，其计算方式为：
+$$
+P_1 = (u,v) \\
+P_k = P_{k-1} + d_{\tau + k - 2}(p_{k-1})
+$$
+
+<div align=center>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/TrajectoryStacking.png" width="60%">
+</div>
+此时$I_\tau(u, v, c)$存储的值为该像素点的运动轨迹。
+
+- 输入帧选择
+
+上述两个方法其实考虑的都是前馈光流，我们都是依靠后一帧计算相对于前一帧的光流。当我们考虑T帧时，我们不再一直往后堆L帧，而是计算T帧之前L/2和T帧之后的L/2帧。
+
+- 输入去噪
+
+在输入光流前要减去平均光流，排除车相机的运动导致的负面影响。
+
+- 最终输入
+
+从$I_\tau$中采样为$224*224*2L$输入神经网络中。
+
+### 多任务学习
+
+spatial stream convnet因为输入是静态的图像，因此其预训练模型容易得到（一般采用在ImageNet数据集上的预训练模型），但是temporal stream convnet的预训练模型就需要在视频数据集上训练得到，但是目前能用的视频数据集规模还比较小（主要指的是UCF-101和HMDB-51这两个数据集，训练集数量分别是9.5K和3.7K个video）。因此作者采用multi-task的方式来解决。首先原来的网络（temporal stream convnet）在全连接层后只有一个softmax层，现在要变成两个softmax层，一个用来计算HDMB-51数据集的分类输出，另一个用来计算UCF-101数据集的分类输出，这就是两个task。这两条支路有各自的loss，最后回传loss的时候采用的是两条支路loss的和。
+
 
 

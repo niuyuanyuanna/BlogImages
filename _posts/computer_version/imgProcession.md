@@ -1,12 +1,12 @@
 ---
-title: 图像处理基本方法
+title: 数字图像处理基本原理及方法
 date: 2018-07-12 16:32:49
 tags:
 - 图像处理
 - 原理
 - CV
 categories: Computer Version
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.jpeg
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.png
 ---
 
 # 数字图像处理基本原理及方法

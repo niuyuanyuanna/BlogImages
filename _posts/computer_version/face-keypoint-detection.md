@@ -5,7 +5,7 @@ tags:
 - CV
 - face detection
 categories: Computer Version
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.jpeg
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.png
 ---
 
 # 人脸关键点检测
@@ -16,7 +16,7 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/compu
 
 人脸关键点检测也称为人脸关键点检测、定位或者人脸对齐，是指给定人脸图像，定位出人脸面部的关键区域位置，包括眉毛、眼睛、鼻子、嘴巴、脸部轮廓等。
 
-关键点的集合称作形状(shape)，形状包含了关键点的位置信息，而这个位置信息一般可以用两种形式表示，第一种是关键点的位置相对于整张图像，第二种是关键点的位置相对于人脸框(标识出人脸在整个图像中的位置)。把第一种形状称作绝对形状，它的取值一般介于 $[0 \sim h]$或$[0 \sim w]$，第二种形状我们称作相对形状，它的取值一般介于 0 到 1。这两种形状可以通过人脸框转换。
+关键点的集合称作形状(shape)，形状包含了关键点的位置信息，而这个位置信息一般可以用两种形式表示，第一种是关键点的位置相对于整张图像，第二种是关键点的位置相对于人脸框(标识出人脸在整个图像中的位置)。把第一种形状称作绝对形状，它的取值一般介于 $[0 \sim h]$或$[0 \sim w]​$，第二种形状我们称作相对形状，它的取值一般介于 0 到 1。这两种形状可以通过人脸框转换。
 
 ### 分类
 

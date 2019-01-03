@@ -6,14 +6,17 @@ tags:
 - 原理
 - CV
 categories: Computer Version
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.jpeg
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/computer_version.png
 ---
 
 # <center>图像分割</center>
 
 图像分割就是预测图像中每一个像素所属的类别或者物体。图像分割有两个子问题，一个是只预测类别层面的分割，对每个像素标出一个位置。第二个是区分不同物体的个体。应用场景，比如自动驾驶，3D 地图重建，美化图片，人脸建模等等。
 传统的图像分割通常和图像分类结合，它是图像识别的第一阶段。
+
+<div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/60398275.jpg" title="图像识别流程" alt="图像识别流程" width=80% />
+</div>
 
 图像分割难点：
 
@@ -49,10 +52,15 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/compu
 
 全局阈值法采用同一个灰度值作为分割门限对整幅图进行处理，特别对直方图分布呈双峰态的图像分割效果好，如：
 
+<div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/30853134.jpg" title="全局阈值分割" alt="全局阈值分割" width=80% /> 
+</div>
 
 但在有意义的全局阈值不存在的情况下，全局阈值的分割效果很差，如：
+
+<div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/36706577.jpg" title="全局阈值分割" alt="全局阈值分割" width=80% /> 
+</div>
 
 ##### 迭代阈值图像分割
 迭代阈值的步骤为：
