@@ -333,8 +333,9 @@ template <typename T> BinNodePosi(T) AVL<T>::insert(const T & e){
    在图中这种情况下，g、p、v是朝同一个方向排列。将T3的一个叶节点删除，会引起g点失衡。因此需要围绕点g进行一次zig操作。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/85320993.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/85320993.jpg" width=70%/>
 </center>
+
 
    当T2最后的那个节点不存在，即调整后的子树高缩减了1，因此有可能引起更上一层的失衡，称为失衡传播现象，可能需要做$O(logn)$次调整。
 
@@ -375,8 +376,9 @@ template<typename T> bool AVL<T>::remove(const T & e){
 设g(x)为最低的失衡节点，考察祖孙三代：g、p、v，按照中序遍历次序，将其重命名为$a < b < c$。则他们共拥有互不相交的四棵（可能为空）的子树，按照中序遍历次序命名为$T_{0}< T_{1} < T_{2} < T_{3}$。将原来以g为根的子树替换为一颗新的子树$S'$。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/64989590.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/64989590.jpg" width=30%/>
 </center>
+
 
 #### 实现
 
@@ -441,12 +443,13 @@ template<typenmae T> BinNodePosi(T) BST<T>::rotateAt(BinNodePosi(T) v){
 zig-zig 和zig-zag分别对应于：
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/88247417.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/88247417.jpg" width=30%/>
 </center>
 
 剩下两种情况恰好与之相反。
 
 ### AVL树性能
+
 优点： 
 
 - 无论查找、插入或删除，最坏情况下的复杂度均为$O(logn)$，存储空间为$O(n)$

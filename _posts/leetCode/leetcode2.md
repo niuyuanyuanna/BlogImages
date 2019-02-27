@@ -5,7 +5,7 @@ tags:
 - leetcode
 - java
 categories: Leetcode
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/LeetCode.png
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/leetcode.png
 ---
 
 #  19. Remove Nth Node From End of List 

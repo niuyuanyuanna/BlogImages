@@ -58,7 +58,7 @@ traverse()       遍历
 由于每个节点只有一个父节的特性，在向上查询时，可以取得很好的效果，但在向下查询时需要遍历所有节点。在表格中增加子节点的信息，使得向下查找只需遍历当前节点的子节点。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/65826164.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/65826164.jpg" width=100%/>
 </center>
 
 但是这样操作对于子节点仍然有些多余，因此考虑将子节点查找的结构变为：
@@ -88,13 +88,13 @@ traverse()       遍历
 - 真二叉树：对于只有单分支或者叶子节点添加一个或2个对应数据为0的孩子，将这个二叉树变为一个满二叉树。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/51267035.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/51267035.jpg" width=80%/>
 </center>
 
 二叉树可以描述任意一颗树，将任意一棵树用长子-兄弟法表示。多出的兄弟节点可以用兄弟节点的子节点表示。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/13837723.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/13837723.jpg" width=30%/>
 </center>
 
 ### 二叉树的实现
@@ -195,7 +195,7 @@ BinNodePosi(T)BinTree<T>::insertAsRC(BinNoidePosi(T) x){
 按照某种次序访问数中的各个节点，使得每个节点被访问恰好一次。遍历分为先序、中序、后序，按照当前节点与其左右孩子节点的访问次序来划分。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/10018835.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/10018835.jpg" width=90%/>
 </center>
 
 1. 先序遍历，时间复杂度为$O(n)$
@@ -226,7 +226,7 @@ void travPre_I1(BinNodePosi(T) x, VST & visit){
 第一种迭代方法较难理解，不便于判断子节点的遍历次序，引入第二种迭代方法：
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/51411613.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/51411613.jpg" width=90%/>
 </center>
 
 这种方法自上而下对做侧分支进行访问然后自下而上对右子树遍历。不同的右子树相互独立且自成一个子任务。
@@ -268,7 +268,7 @@ void traverse(BinNodePosi(T) x, VST & visit){
 根据观察可以发现中序遍历是从根节点开始沿左侧分支向下，直到找到最后一个左孩子，访问左孩子后再访问上层节点，最后访问该上层节点的右孩子。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/99511231.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/99511231.jpg" width=90%/>
 </center>
 
 迭代算法：
@@ -310,7 +310,7 @@ void traverse(BinNodePosi(T) x, VST & visit){
 ```
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/66214575.jpg" width=50%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/66214575.jpg" width=90%/>
 </center>
 
 在后序遍历的过程中，从左侧链最后一个节点开始，再访问其右子节点，再自下而上访问其父节点。

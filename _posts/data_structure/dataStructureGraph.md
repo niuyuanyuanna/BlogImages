@@ -221,8 +221,9 @@ template <typename Tv, typename Te> class GraphMatrix : public Graph<Tv, Te>{
 此算法会逐层访问顶点，灰色线条表示各邻接顶点之间可能会有的关系，但此算法会忽略这种关系。这种广度遍历是树的层次遍历的推广。
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/17577110.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/17577110.jpg" width=50%/>
 </center>
+
 
 #### 算法
 ```c++
@@ -290,8 +291,9 @@ void Graph<Tv, Te>::bfs(int s){            // s为起点
 此过程等效于树的先序遍历，DFS会构造出原图的一颗支撑树。其过程为：
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/54619684.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/54619684.jpg" width=50%/>
 </center>
+
 
 按照图中的箭头方向，从红色到白色到黄色到蓝色，每次改变颜色都是因为处于else语句中。
 
@@ -338,14 +340,16 @@ void dealwithUforDFS(Tv v, Tv u){
 例如对当前的无向图：
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/85305440.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/85305440.jpg" width=50%/>
 </center>
+
 
 最终会得到一个支撑树：
 
 <center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/27991522.jpg" width=75%/>
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/dataStructure/27991522.jpg" width=40%/>
 </center>
+
 
 与BFS（v）类似，在有多个连通域的时候，需要将DFS（v）用while循环封装起来
 
