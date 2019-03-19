@@ -5,7 +5,7 @@ tags:
 - leetcode
 - java
 categories: Leetcode
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/leetcode.png
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/leetcode.jpg
 ---
 # 2.Add Two Numbers 
 

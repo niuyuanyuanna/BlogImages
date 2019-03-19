@@ -73,34 +73,37 @@ $$
 #### 高斯差分
 
 为了在尺度空间中找到稳定不变的极值点，在SIFT算法中使用了高斯差分(DOG)函数$D(x,y,\sigma)$，定义为:
+
 $$
-\begin{align*}
-D(x,y,\sigma) &= [D(x,y,k\sigma) - D(x,y,\sigma)]*I(x,y)\\
-              &= L(x,y, k\sigma) - L(x, y, \sigma)
-\end{align*}
+\begin{aligned}
+D(x,y,\sigma) &= [D(x,y,k\sigma) - D(x,y,\sigma)] \times I(x,y)\\
+&= L(x,y, k\sigma) - L(x, y, \sigma)
+\end{aligned}
 $$
 
 其中$kσ$和$σ$是连续的两个图像的平滑尺度，所得到的差分图像在高斯差分金字塔中。 
 
 选择高斯差分函数的原因：
 
-- 计算简单，因为$ L(x, y, \sigma)$可以由上一步计算得到，$D(x,y,\sigma)$只需要进行减法计算
+- 计算简单，因为$L(x, y, \sigma)$可以由上一步计算得到，$D(x,y,\sigma)$只需要进行减法计算
 - LoG（Laplacian of Gaussian）高斯拉普拉斯算子，即图像的二阶导数，能够在不同的尺度下检测到图像的斑点特征，从而检测到图像中尺度变化下的位置不动点，但是LoG的运算效率不高
 - 通过前人的实验证明LoG提取的特征稳定性最强
 
 而DoG是LoG的近似。DoG和LoG的关系如下述所示：
 
 $$
-\begin{align*}
+\begin{aligned}
 \sigma \nabla ^2 G &= \frac{\partial G}{\partial \sigma}\\
 &\approx \frac{G(x,y,k\sigma)−G(x,y,\sigma)}{k\sigma−\sigma}
-\end{align*}
+\end{aligned}
 $$
 
 因此，有：
+
 $$
 G(x,y,k\sigma)−G(x,y,\sigma) \approx(k-1) \sigma ^2 \nabla ^2 G
 $$
+
 $\sigma ^2 \nabla ^2 G$正是尺度归一化算子的表达形式。在所有的尺度中$k−1$是一个常数，当$k$趋近于1的时候误差趋近于0，但实际上这种误差对于极值的位置检测并没有什么影响 。（==这里不是很懂==）
 
 #### 高斯图像金字塔
@@ -127,20 +130,25 @@ $$
 - 构建完第0组(octave)后，将第0组的倒数第三层(scale)图像进行下采样得到。由5式可以看出，倒数第三的尺度为$k^s\sigma_0$，其中$k = 2^{\frac{1}{s}}$，则可以得到其尺度为$2\sigma_0$。这样使得DoG满足尺度连续性。
 
 在高斯金字塔中第一组中的不同层中的平滑尺度分别为$σ$,$kσ$,$k^2σ$,$k^3σ$,…,$k^{s+2}σ$把$k=2^{\frac{1}{s}}$带入上面的数列中，则第一组中不同层的平滑尺度分别为:
+
 $$
 σ,2^{\frac{1}{s}}σ,2^{\frac{2}{s}}σ,2^{\frac{3}{s}}σ,…,2^{\frac{s}{s}}σ,2^{\frac{s+1}{s}}σ,2^{\frac{s+2}{s}}σ
 $$
 
 一共有$s+3$层，那么取得的高斯差分金子塔有$s+2$层,平滑尺度分别为:
+
 $$
 σ,2^{\frac{1}{s}}σ,2^{\frac{2}{s}}σ,2^{\frac{3}{s}}σ,…,2^{\frac{s}{s}}σ,2^{\frac{s+1}{s}}σ
 $$
+
 最终有极值的只有$s$层，平滑程度为：
+
 $$
 2^{\frac{1}{s}}σ,2^{\frac{2}{s}}σ,2^{\frac{3}{s}}σ,…,2^{\frac{s}{s}}σ
 $$
 
 由第二组的第一层的平滑尺度为$2σ$可知，应该从第一组的倒数第三层开始下采样。按照这样的操作第二组的最终有极值的几层的平滑程度分别为:
+
 $$
 2^{\frac{s+1}{s}},2^{\frac{s+2}{s}},...,2^{\frac{s+s}{s}}
 $$
@@ -160,7 +168,7 @@ DoG金字塔相对较为简单，由高斯金字塔相邻的两层相减得到Do
 在Lowe的论文中，使用的是泰勒展开式作为拟合函数。通过局部极值点定位得到的极值点是一个三维向量，包括它所在的尺度$σ$以及所在尺度图像中的位置坐标，即$X=(x,y,σ)$.因此需要三维的泰勒展开式进行展开，设$X_0=(x_0,y_0,σ_0)$，则其展开式的矩阵形式为：
 
 <div align=center>
-<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/Shif.png" width="75%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/Sift.png" width="75%">
 </div>
 
 写为矢量的形式为：
@@ -170,12 +178,14 @@ f(X) = f(X_0) + \frac{\partial f^T}{\partial X}(X-X_0) + \frac{1}{2}(X-X_0)^T \f
 $$
 
 在这里$X_0$表示离散的差值中心，$X$表示拟合后连续空间的差值点坐标，则设$\hat{X}=X−X_0$，表示偏移量，带入21式，另求得的导数为0，则有:
+
 $$
 \hat{X} = -\frac{\partial^2 f^{-1}}{\partial X^2} \frac{\partial f}{\partial X}
 $$
 ==这里没懂==
 
 把该极值带入原公式中，有结果：
+
 $$
 f(\hat{X}) = f(X_0) + \frac{1}{2} \frac{\partial f^T}{\partial X} \hat{X}
 $$
@@ -187,6 +197,7 @@ $$
 ### 构建积分图像
 
 在一个特征点$x=(x,y)$的领域上，计算其积分图像$I(x,y)$：
+
 $$
 I_{\Sigma }(x)=\sum_{i=0}^{i \leq x} \sum_{j=0}^{j \leq y}I(i,j)
 $$

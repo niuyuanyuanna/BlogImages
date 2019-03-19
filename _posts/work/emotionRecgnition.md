@@ -88,7 +88,7 @@ Real-time CNN for Emotion and Gender Classification，采用了ResNet的网络�
 #### MobileNets
 
 MobileNets是为移动和嵌入式设备提出的高效模型。MobileNets基于流线型架构(streamlined)，使用深度可分离卷积(depthwise separable convolutions，即Xception变体结构)来构建轻量级深度神经网络。
-深度可分离卷积的作用：把标准卷积分解成深度卷积(depthwise convolution)和逐点卷积(pointwise convolution)。这么做的好处是可以大幅度降低参数量和计算量。详见另一篇博客[MobileNets]()
+深度可分离卷积的作用：把标准卷积分解成深度卷积(depthwise convolution)和逐点卷积(pointwise convolution)。这么做的好处是可以大幅度降低参数量和计算量。详见另一篇博客[MobileNets](https://niuyuanyuanna.github.io/2019/02/26/work/mobileNets/#MobileNets%E4%BB%8B%E7%BB%8D)
 
 网络结构为：
 
@@ -102,9 +102,15 @@ MobileNets是为移动和嵌入式设备提出的高效模型。MobileNets基于
 
 结合人脸关键点检测进行表情分类，整体沿用DAN的方法，使用AffectNet作为训练集。
 
+2017 年，Kowalski 等人提出一种新的级联深度神经网络——DAN（Deep Alignment Network），以往级联神经网络输入的是图像的某一部分，与以往不同，DAN 各阶段网络的输入均为整张图片。当网络均采用整张图片作为输入时，DAN 可以有效的克服头部姿态以及初始化带来的问题，从而得到更好的检测效果。详见另一篇博客[DAN](https://niuyuanyuanna.github.io/2018/11/08/computer_version/face-keypoint-detection/#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84)
 
+这个使用AffectNet作为训练集还未调试成功，根据论文描述，其acc可以达到73.6%
 
+### 实验分析
 
+在使用之前保留下来的CK+数据集进行InceptionV3的迁移训练时，因为数据集重复度过高，因此得到的精确度可以达到90%以上。后使用raf数据集进行训练时，网络严重过拟合，训练集精度可以达到99%，但在测试集上效果不佳，只能达到75%左右，因为使用的数据集只有1.5w个数据。结合人脸关键点的DAN模型还没有调通，多任务的网络模型可能达到更好的效果。
+
+所有实验都是首先通过了face detection之后进行的，这个步骤需要调用dlib人脸检测接口。
 
 
 

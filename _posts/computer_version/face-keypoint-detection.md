@@ -101,10 +101,13 @@ $$
 f_t = \phi (I, S_t)
 $$
  这里特征使用的是shape-indexed features，也可以使用诸如HOG、SIFT等人工设计的特征，或者其他可学习特征（learning based features），然后通过训练得到的回归器$r_t$来估计增量$\Delta S$( update vector)
+
 $$
 \Delta S = r_t(\phi (I, S_t))
 $$
-把$\Delta S$加到前一个阶段的$ S$上得到新的$S$，这样通过不断的迭代即可以得到最终的S(shape)。
+
+把$\Delta S$加到前一个阶段的$S$上得到新的$S$，这样通过不断的迭代即可以得到最终的S(shape)。
+
 $$
 S_{t+1} = S_{t} + \Delta S
 $$
@@ -158,6 +161,7 @@ DCNN 采用级联回归的思想，从粗到精的逐步得到精确的关键点
 网络输入为40×40的灰度图，通过CNN后得到2×2×64的特征图，再通过一层含有100个神经元的全连接层输出最终提取到的共享特征。该特征为所有任务共享，对于关键点检测问题，就采用线性回归模型；对于分类问题，就采用逻辑回归。
 
 在传统 MLT 中，各任务重要程度是一致的，其目标方程如下：
+
 $$
 \arg\min \sum_{t-1}^{T}\sum_{i=1}^{N} \ell(y_i^t, f(\mathbf{x}_i^t; \mathbf{w}^t)) + \mathit{\Phi}(\mathbf {w}^t) \\
 \{ \mathbf {w}^t\}_{t=1}^T
@@ -169,16 +173,20 @@ $$
 - $\mathit{\Phi}(\mathbf {w}^t)$表示正则化
 
 对于各任务 t 而言，其重要性是相同的，但是在多任务学习中，往往不同任务的学习难易程度不同，若采用相同的损失权重，会导致学习任务难以收敛。文章针对多任务学习中，不同学习难度问题进行了优化，提出带权值的目标函数：
+
 $$
 \mathop{\arg\min}_{\mathbf{w}^r, \{\mathbf{w}^a \}_{a\in A}} \ \ \sum_{i=1}^{N} \ell(y_i^t, f(\mathbf{x}_i^t; \mathbf{w}^t)) + \sum_{i = 1}^{N}\sum_{a\in A}\lambda ^a \ell(y_i^a, f(\mathbf{x}_i^a; \mathbf{w}^a))
 $$
+
 式中前一项为人脸关键点检测的损失函数，第二项表示其他任务的损失函数，$\lambda ^a$为任务$a$的重要程度。在论文中，四个子任务分别为：性别、是否带眼镜、微笑、脸部姿势，因此，优化目标函数为：
+
 $$
 \mathop{\arg\min}_{\mathbf{w}^r, \{\mathbf{w}^a \}_{a\in A}} \ \ 
 \frac{1}{2}\sum_{i=1}^{N} \|(y_i^t, f(\mathbf{x}_i^t; \mathbf{w}^t)\|^2 
 + \sum_{i = 1}^{N}\sum_{a\in A}\lambda ^a y_i^a \log( p (y_i^a| \mathbf{x}_i^a; \mathbf{w}^a)) 
 + \sum_{t = 1}^T \| \mathbf{w}^a \|_2^2
 $$
+
 分类任务采用交叉熵损失函数。
 
 针对多任务学习的另外一个问题——各任务收敛速度不同，本文提出一种新的提前停止（Early Stopping）方法。当某个子任务达到最好表现以后，这个子任务就对主任务已经没有帮助，就可以停止这个任务。
@@ -198,9 +206,11 @@ MTCNN 包含三个级联的多任务卷积神经网络，分别是 Proposal Netw
 MTCNN 实现人脸检测和关键点定位分为三个阶段。首先由 P-Net 获得了人脸区域的候选窗口和边界框的回归向量，并用该边界框做回归，对候选窗口进行校准，然后通过非极大值抑制（NMS）来合并高度重叠的候选框。然后将 P-Net 得出的候选框作为输入，输入到 R-Net，R-Net 同样通过边界框回归和 NMS 来去掉那些 false-positive 区域，得到更为准确的候选框；最后，利用 O-Net 输出 5 个关键点的位置。
 
 在具体训练过程中，作者就多任务学习的损失函数计算方式进行相应改进。在多任务学习中，当不同类型的训练图像输入到网络时，有些任务是不进行学习的，因此相应的损失应为 0。例如，当训练图像为背景（Non-face）时，边界框和关键点的 loss 应为 0，文中提供计算公式自动确定 loss 的选取，公式为：
+
 $$
 \min \sum_{i = 1}^{N} \sum_{j \in \{ det, box, landmark\}} \alpha_j \beta_i^j L_i^j
 $$
+
 其中
 
 - $\alpha_j$表示第$j$个任务的重要程度，在P-Net中，$\alpha_{det} = 1$ ，$\alpha_{box} = 0.5$，$\alpha_{landmark} = 0.5$；在R-Net中$\alpha_{det} = 1$ ，$\alpha_{box} = 0.5$，$\alpha_{landmark} = 1$。在R-Net中将$\alpha_{landmark} $增大，因为需要对关键点进行检测，所以相应增大任务重要性
@@ -256,6 +266,7 @@ DAN 包含多个阶段，每一个阶段含三个输入和一个输出，输入�
 第一阶段的输入仅有原始图片和 $S_0$。面部关键点的初始化即为 $S_0$，是由所有关键点取平均得到，第一阶段输出 $S_1$。对于第二阶段， $S_1$经第一阶段的 CONNECTION LAYERS 进行转换，分别得到转换后图片 $T_2(I)$、 $S_1$ 所对应的热图  $H_2$ 和第一阶段 $fc_1$层输出，这三个正是第二阶段的输入。如此周而复始，直到最后一个阶段输出 $S_N$。
 
 DAN 要做的“IMAGE TRANSFORM“，就是图片矫正， DAN 对姿态变换具有很好的适应能力，或许就得益于这个“IMAGE TRANSFORM“。$S_t$公式为：
+
 $$
 S_t = T_t^{-1}(T_t(S_{t-1}) + \Delta S_t)
 $$
@@ -283,6 +294,7 @@ Feed forward NN网络参数为：
 Feed Forward NN的输入是经过“IMAGE TRANSFORM“之后得到的偏移量$\Delta S_t$，它是在新特征空间下的偏移量，在经过偏移后再经过反变换$T_t^{-1}(·)$，将其还原到原始空间。
 
 关键点热度图的计算就是一个中心衰减，关键点处值最大，越远则值越小，公式如下：
+
 $$
 H(x, y) = \frac{1}{1 + \mathop {\min}_{S_i \in T_t(S_{t-1})} \ \ \|(x, y)-S_i \|}
 $$

@@ -36,11 +36,11 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/deep_
 最大均值差异（Maximum mean discrepancy），度量在再生希尔伯特空间中两个分布的距离，是一种核学习方法。
 
 两个随机变量的距离为：  
+
 $$
-\begin{equation}  
 MMD[\mathfrak{F},X,Y]=[\frac{1}{m^{2}}\sum_{i,j=1}^{m}k(x_{i},y_{j}) - \frac{2}{mn}\sum_{i,j=1}^{m,n}k(x_{i},y_{j}) + \frac{1}{n^{2}}\sum_{i,j=1}^{n}k(x_{i},y_{j})]^{\frac{1}{2}}  
-\end{equation}
 $$
+
 其中
 
 - $k()$是映射关系，类似于SVM中的核函数，把原变量映射到高维空间;
@@ -79,10 +79,13 @@ DAN的网络结构为：
 MMD主要思想是把source和target用相同的映射方法映射到同一个再生核希尔伯特空间（RKHS）中，然后求映射后两部分的均值差异，作为两部分数据的差异。在MMD中这个核函数是固定的，在实现时可以选择是高斯核还是线性核使用单一的核函数，无法确定哪个核函数好。因此使用多个核构造总的核。
 
 对于两个概率分布$p$，$q$，它们之间的MK-MMD为：
+
 $$
 d^2_k(p,q) \triangleq ||E_p[\phi(\mathbf{x}_s)]-E_q[\phi(\mathbf{x}_t)]||^2_{\mathcal{H}}
 $$
+
 多个核一起定义的kernel为：
+
 $$
 \mathcal{K} \triangleq \left\{k= \sum_{u=1}^{m}\beta_u k_u : \beta_u \ge 0, \forall u \right\}
 $$
@@ -124,12 +127,11 @@ d^2_k(p,q)=\frac{2}{n_s}\sum_{i=1}^{n_s/2}g_k(\mathbf{z}_i)\\
 $$
 
 将kernel作用到$\mathbf{z}_i$上，变为：
+
 $$
 g_k(\mathbf{z}_i) \triangleq k(\mathbf{x}^s_{2i-1},\mathbf{x}^s_{2i})+k(\mathbf{x}^t_{2i-1},\mathbf{x}^t_{2i})-k(\mathbf{x}^s_{2i-1},\mathbf{x}^t_{2i})-k(\mathbf{x}^s_{2i},\mathbf{x}^t_{2i-1})
 $$
 只计算了连续的一对数据的距离，再乘以2，这样就可以把时间复杂度降低到$O(n)$。在具体进行SGD的时候，需要对所有的参数求导：对$\Theta$求导。在实际用multiple-kernel的时候，作者用多个高斯核。
-
-
 
 
 ## Beyond Sharing Weights for Deep Domain Adaptation
@@ -137,6 +139,7 @@ $$
 发表于2016年，提出了在适配层中target和source不共享参数的思想。与以往的Domain adaptation在Deep Learing中的运用不同，这篇论文提出，在source domain和target domain之间使用不同的参数而非共享参数（不是所有的layers都不共享参数，有些层还是共享了）。他们提出在试验中这种网络的表现会好于那些使用共享参数的网络。
 
 其网络结构为双流结构：
+
 <div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/deepLearning/65970249.jpg" alt="BSW for DDA" title="BSW for DDA" width=70%/>
 </div>
@@ -144,10 +147,10 @@ $$
 该结构引入loss防止两个分支对应的权重差异过大。
 
 
-
 ## Deep CORAL: Correlation Alignment for Deep Domain Adaptation
 
 这篇文章发表于2016年，主要提出一个CORAL loss，通过对source domain和target domain进行线性变换将各自的二阶统计量对齐。
+
 $$
 L_{CORAL} = \frac{1}{4d^2} ||C_S - C_T||^2 \\
 C_S = \frac{1}{n_S - 1}(D_S^TD_S - \frac{1}{n_S} (1^TD_S)^T (1^TD_S)) \\
@@ -156,11 +159,11 @@ $$
 其中
 
 - $n_S$，$n_T$为source domain和target domain的batch size；
-
 - $d$为特征的维度；
 - $1^T$为一个全1的向量
 
 其网络结构为：
+
 <div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/deepLearning/32435164.jpg" alt="Deep CORAL" title="Deep CORAL" width=80%/>
 </div>
@@ -169,10 +172,13 @@ $$
 ## Deep Domain Adaptation by Geodesic Distance Minimization
 
 文章发表于2017年，在CORAL loss的基础上将其改进为Log-CORAL loss。表示两个协方差矩阵的log之间的欧氏距离。公式为：
+
 $$
 L_{LogCORAL} = \frac{1}{4d^2} ||log(C_S) - log(C_T)||^2 \\
 $$
+
 其网络结构为：
+
 <div align=center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/deepLearning/24542894.jpg" alt="Log-CORAL loss" title="Log-CORAL loss" width=80%/>
 </div>

@@ -5,7 +5,7 @@ tags:
 - leetcode
 - C++
 categories: Leetcode
-top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/leetcode.png
+top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/leetcode.jpg
 ---
 
 # Top 100 Liked Questions (1)

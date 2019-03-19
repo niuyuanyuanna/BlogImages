@@ -52,10 +52,13 @@ $$
 
 ### Tanh函数
 tanh和sigmoid函数相似，实际上，tanh 是sigmoid的变形：
+
 $$
 tanh(x) = 2sigmoid(2x) -1
 $$
+
 与 sigmoid 不同的是，tanh 是0均值的。它的图像关于原点中心对称。因此，实际应用中，tanh 会比 sigmoid 更好。
+
 <center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/deepLearning/91091273.jpg" alt="tanh function" title="tant function" width=70%/>
 </center>
@@ -74,6 +77,7 @@ $$
 
 ReLU非线性函数图像如下图所示。相较于sigmoid和tanh函数，ReLU对于随机梯度下降的收敛有巨大的加速作用；sigmoid和tanh在求导时含有指数运算，而ReLU求导几乎不存在任何计算量。
 其公式为：
+
 $$
 f(x) = max(0,x)
 $$
@@ -94,13 +98,16 @@ $$
 
 #### Leakly ReLu
 Leaky ReLUs用来解决 “dying ReLU” 问题。与 ReLU 不同的是：
+
 $$
-f(x)=\left\{\begin{matrix}
+f(x)=
+\begin{cases} 
 \alpha x &  (x<0)\\ 
  x & (x>=0) 
-\end{matrix}\right.
+\end{cases}
 $$
-此处$\alpha $是一个较小的常数，这样既修正了数据分布，又保留了负半轴的值，使得负半轴的信息不会全部丢失。
+
+此处$\alpha$是一个较小的常数，这样既修正了数据分布，又保留了负半轴的值，使得负半轴的信息不会全部丢失。
 其图像为：
 
 <center>
@@ -110,6 +117,7 @@ $$
 #### Parametric ReLU(P-ReLu)
 对于 Leaky ReLU 中的$\alpha$，通常都是通过先验知识人工赋值的。 然而可以观察到，损失函数对α的导数我们是可以求得的，可以将它作为一个参数进行训练，而且效果更好。
 对$\alpha $的导数如下：
+
 $$
 \frac{\delta y_{i}}{\delta \alpha} = \left\{\begin{matrix}
 0 & y_{i} > 0 \\ 
@@ -120,6 +128,7 @@ $$
 #### Randomized ReLU (R-ReLu)
 Randomized Leaky ReLU是 leaky ReLU 的random 版本 （$\alpha$ 是随机的）。核心思想就是，在训练过程中，$\alpha$ 是一个服从高斯分布的 $U(l,u)$ 中 随机抽取出来的，然后在测试过程中进行修正（有点像dropout的用法）。
 数学表达式为：
+
 $$
 y_{j,i}=\left\{\begin{matrix}
 x_{j,i} &x_{j,i}\geq 0 \\ 
@@ -130,6 +139,7 @@ $$
 其中$a_{j,i}\sim U(l,u)$，$l<u$且$u\in [0,1)$。在测试阶段，把训练过程中所有的$\alpha_{j,i}$取个平均值 。
 
 测试阶段激活函数为：
+
 $$
 y_{ij}=\frac{x_{ij}}{\frac {l+u}{2}} 
 $$
@@ -140,6 +150,7 @@ $$
 
 ### Maxout
 Maxout是对ReLU和leaky ReLU的一般化归纳，假设$w$是二维的，函数公式为：
+
 $$
 f(x) = max(w_{1}^{T}x+b_{1},w_{2}^{T}x+b_{2})
 $$
@@ -158,6 +169,7 @@ Maxout非线性函数图像如下图所示。Maxout具有ReLU的优点，如计�
 
 ### Softmax
 Softmax用于多分类神经网络输出，目的是让大的更大。函数公式是：
+
 $$
 \sigma(z)_{j}=\frac{e^{z_{j}}}{ \sum_{k=1}^{K} e^{z_{k}}}
 $$
@@ -167,11 +179,3 @@ $$
 </center>
 
 Softmax是Sigmoid的扩展，当类别数k＝2时，Softmax回归退化为Logistic回归。  
-
-
-
-
-
-
-
-

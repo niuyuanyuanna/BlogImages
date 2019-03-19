@@ -18,6 +18,7 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/compu
 <center>
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/work/MobileNet.jpg" width=50%/>
 </center>
+
 主要思想是用上图中的（b）+（c）代替（a）。依然假设有$N$个卷积核，每个卷积核维度是$D_K \cdot D_K \cdot M$，输入feature map的通道数是$M$，输出feature map为$D_F \cdot D_F \cdot N$。那么（b）表示用$M$个维度为$D_K \cdot D_K \cdot 1$的卷积核去卷积对应输入的$M$个feature map，然后得到$M$个结果，而且这$M$个结果相互之间不累加（传统的卷积是用$N$个卷积核卷积输入的所有（也就是$M$个）feature map，然后累加这$M$个结果，最终得到$N$个累加后的结果），注意这里是用$M$个卷积核而不是$N$个卷积核，所以（b）中没有$N$，只有$M$。因此计算量是$D_K \cdot D_K \cdot M \cdot D_F \cdot D_F$。（b）生成的结果应该是$D_F \cdot D_F \cdot M$，图中的（b）表示的是卷积核的维度。
 
 （c）表示用N个维度为1*1*M的卷积核卷积（b）的结果，即输入是$D_F \cdot D_F \cdot M$，最终得到$D_F \cdot D_F \cdot N$的feature map。这个就可以当做是普通的一个卷积过程了，所以计算量是$D_F \cdot D_F  \cdot 1  \cdot 1 \cdot M  \cdot N$（联系下前面讲的标准卷积是$D_K \cdot D_K \cdot M \cdot N \cdot D_F \cdot D_F$，就可以看出这个（c）其实就是卷积核为$1 \cdot 1$的标准卷积）。
@@ -27,10 +28,13 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/compu
 标准卷积核会把输入的所有通道结果累加起来，得到一个卷积核的结果，共有N个卷积核，因此得到N个结果，输出$D_G \cdot D_G$就是一个$D_K \cdot D_K \cdot M$卷积所有通道累加后得到的结果。
 
 输入特征F映射尺寸为$(D_F, D_F, M)$，采用标准卷积K的尺寸如图（a）所示，为$(D_K, D_K, M, N)$，输出的特征映射G尺寸为$(D_G, D_G, N)$。输入通道数为$M$，输出通道数为$N$。标准卷积计算公式为：
+
 $$
 G_{k,l,n} = \sum_{i,j,m}K_{i,j,m,n} \cdot F_{k+i-1, l+j-1, m}
 $$
+
 对应的计算量为：
+
 $$
 D_K \cdot D_K \cdot M \cdot N \cdot D_G \cdot D_G
 $$
@@ -48,15 +52,19 @@ $$
 逐点卷积表示用$N$个维度为$1 \cdot 1 \cdot M$的卷积核去卷积(b)的输出，为$D_G \cdot D_G \cdot M$，最终得到$D_G, D_G, N$，可理解为一个标准卷积，其计算量为$1 \cdot 1 \cdot M \cdot N \cdot D_G \cdot D_G$
 
 拆分后，深度卷积公式为：
+
 $$
 \hat{G}_{k,l,n} = \sum_{i,j}\hat{K}_{i,j,m} \cdot F_{k+i-1, l+j-1, m}
 $$
+
 其中$\hat{K}$深度卷积，卷积核为$(D_K,D_K,1,M)$。上面公式表示第$m$个卷积核应用在$F$中第$m$个通道的输出。深度卷积和逐点卷积的计算量为：
+
 $$
 D_K \cdot D_K \cdot M \cdot D_G \cdot D_G + M \cdot N\cdot D_G \cdot D_G
 $$
 
 因此相对于标准卷积来说，计算量减少了到原来的
+
 $$
 \frac{D_K \cdot D_K \cdot M \cdot D_G \cdot D_G + M \cdot N\cdot D_G \cdot D_G}
 {D_K \cdot D_K \cdot M \cdot N \cdot D_G \cdot D_G} = \frac{1}{N} + \frac{1}{D_K^2}

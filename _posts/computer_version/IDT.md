@@ -97,17 +97,14 @@ $$
 2. 在计算前先定义占有概率，即特征$x_t$由第$i$个高斯分布生成的概率：
 
 $$
-\begin{equation}
 \begin{aligned}
 \gamma _t(i)  &= p(i | x_t, \lambda) \\
 &= \frac{\omega_i p_i (x_t| \lambda)}{\sum_{j=1}^K w_j p_j (x_t | \lambda)}
 \end{aligned}
-\end{equation}
 $$
 
 对各参数求偏导：
 $$
-\begin{equation}
 \begin{aligned}
 &\frac{\partial \mathfrak{L}(X|\lambda)}{\partial \omega_i} = \sum_{t=1}^{T} [\frac{\gamma _t(i)}{\omega_i} - \frac{\gamma _t(1)}{\omega_1}] \quad for(i \geq 2) \\
 &\frac{\partial \mathfrak{L}(X|\lambda)}{\partial \mu_i^d} = \sum_{t=1}^{T} 
@@ -115,13 +112,12 @@ $$
 &\frac{\partial \mathfrak{L}(X|\lambda)}{\partial \sigma_i^d} = \sum_{t=1}^{T} 
 \gamma _t(i)[\frac{(x_t^d - \mu_i^d)^2}{(\sigma_i^d)^3} - \frac{1}{\sigma_i^d}] \\
 \end{aligned}
-\end{equation}
 $$
 
 注意此处的$i$是指第$i$个高斯分布，$d$是指$x_t$的第$d$维，得到的结果数目为 
 
 - $\omega$：$K-1$个；
-- 均值：$K*D$个；
+- 均值：$K*D​$个；
 - 标准差$K*D$个。
 
 因此共有$(2D+1)*K-1$个偏导结果，这里的$-1$是由于$\omega_i$的约束。
@@ -129,24 +125,20 @@ $$
 3. 在计算完之后，还需要进行归一化。对三种变量分别计算归一化需要的fisher matrix的对角线元素的期望： 
 
 $$
-\begin{equation}
 \begin{aligned}
 & f_{\omega_i} = T(\frac{1}{\omega_i} + \frac{1}{\omega_1}) \\
 & f_{\mu_i^d} = \frac{T_ {\omega _i}}{(\sigma_i^d)^2} \\
 & f_{\sigma_i^d} = \frac{2T_{\omega_i}}{(\sigma_i^d)^2}
 \end{aligned}
-\end{equation}
 $$
 
 $T$为描述子的数目，最终归一化的FV结果为：
 $$
-\begin{equation}
 \begin{aligned}
 & f_{\omega_i} ^{-\frac{1}{2}} \frac{\partial \mathfrak{L}(X|\lambda)}{\partial \omega_i} \\
 & f_{\mu_i^d} ^{-\frac{1}{2}} \frac{\partial \mathfrak{L}(X|\lambda)}{\partial \mu_i^d} \\
 & f_{\sigma_i^d} ^{-\frac{1}{2}} \frac{\partial \mathfrak{L}(X|\lambda)}{\partial \sigma_i^d}
 \end{aligned}
-\end{equation}
 $$
 综上，基于Fisher Vector的图像学习的完整过程应该描述为下面几个步骤：
 

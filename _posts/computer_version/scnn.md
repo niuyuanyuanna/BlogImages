@@ -34,7 +34,7 @@ SCNN主要包括三个部分：
 <img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/SCNN.png" width="100%">
 </div>
 
-使用的每一段视频标注为$\Psi = \{  (\psi_m, \psi_m^{'} , k_m ) \}_{m = 1}^M $，其中$\psi_m$为动作起始时间，$\psi^{'}_m$为动作终止时间，$k_m$为该动作的id。$k_m \in \{ 1,2,...,K \}$，$K$为动作的种类。在训练过程中共有两种视频，一种是修剪过的视频$X \in \mathbb{T}$，对于修剪过的视频$\psi_m = 1$， $\psi_m^{'} = T$  ，$M=1$；另一种是未修剪的视频$X \in \mathbb{U}$
+使用的每一段视频标注为$\Psi = \lbrace {  (\psi_m, \psi_m^{'} , k_m ) } \rbrace_{m = 1}^M$，其中$\psi_m$为动作起始时间，$\psi^{'}_m$为动作终止时间，$k_m$为该动作的id。$k_m \in \lbrace { 1,2,...,K } \rbrace$，$K$为动作的种类。在训练过程中共有两种视频，一种是修剪过的视频$X \in \mathbb{T}$，对于修剪过的视频$\psi_m = 1$， $\psi_m^{'} = T$  ，$M=1$；另一种是未修剪的视频$X \in \mathbb{U}$
 
 ### 多尺度视频片段生成
 

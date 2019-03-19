@@ -32,8 +32,14 @@ top_img: https://github.com/niuyuanyuanna/BlogImages/raw/master/background/data_
 ## 图的存储
 
 ### 邻接矩阵
-使用二维数组表示顶点之间的相邻关系。设$G=(V, E)$是有n个顶点的图，顶点序号依次为0,1,···，n-1，则邻接矩阵可以表示为：
-$arc\left [ i,j \right ]=\left\{\begin{matrix} 1 & \left ( v_{i},v_{j} \right ) \in E\cup \left \langle v_{i},v_{j} \right \rangle \in E\\ 0 & others \end{matrix}\right.$
+使用二维数组表示顶点之间的相邻关系。设$G=(V, E)​$是有n个顶点的图，顶点序号依次为0,1,···，n-1，则邻接矩阵可以表示为：
+$$
+arc\left [ i,j \right ]=
+\left\{\begin{matrix} 
+1 & \left ( v_{i},v_{j} \right ) \in E\cup \left \langle v_{i},v_{j} \right \rangle \in E \\ 
+0 & others 
+\end{matrix}\right
+$$
 
 ### 关联矩阵
 使用二位数字表示顶点和边的关系。设$G=(V, E)$是有n个顶点，e条边的图
