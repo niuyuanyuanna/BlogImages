@@ -63,14 +63,15 @@ $$
 
 最主观的效果就是图像大小发生改变，下图显示了一副$1024 \times 1024$像素的图像，其灰度级为8比特，其他图现象是对原图抽样的结果。
 
-<div align=center>
-<img src="F:\blog\blog_imgs\computerVersion\down-sample.png" width="100%">
+<div align=center>    
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/down-sample.png" width="100%">
 </div>
+
 
 采样可以通过删除行和删除列来进行，恢复可以通过复制行和复制列来进行。将抽样后的图像恢复为原来的大小，结果为：
 
 <div align=center>
-<img src="F:\blog\blog_imgs\computerVersion\up-sample.png" width="100%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/up-sample.png" width="100%">
 </div>
 
 **灰度级变化的影响**
@@ -78,7 +79,7 @@ $$
 保持取样数恒定，以2的整数次幂将灰度级从256减少至2.
 
 <div align=center>
-<img src="F:\blog\blog_imgs\computerVersion\grad-dowm-sample.png" width="100%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/grad-dowm-sample.png" width="100%">
 </div>
 
 **放大和收缩图像**
@@ -112,7 +113,7 @@ $$
 一维线性插值：
 
 <div align=center>
-<img src="F:\blog\blog_imgs\computerVersion\one-demention-insert.png" width="50%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/one-demention-insert.png" width="50%">
 </div>
 
 已知$(x_0, y_0)$与$(x_1,y_1)$的值，要得到这两点间曲线上$(x,y)$的值，可以得到：
@@ -122,7 +123,7 @@ $$
 令$\alpha = \frac{x - x_0}{x_1-x_0}$则$y = (1 - \alpha) y_0 + \alpha y_1$
 
 <div align=center>
-<img src="F:\blog\blog_imgs\computerVersion\two-demention-insert.png" width="100%">
+<img src="https://github.com/niuyuanyuanna/BlogImages/raw/master/computerVersion/two-demention-insert.png" width="100%">
 </div>
 
 已知红点的四个点的坐标及幅值，需要找到绿点的幅值，根据四个红点进行两次一维线性插值找到两个蓝点的幅值，根据两个蓝点再进行一维线性插值，得到中间点的幅值。
@@ -133,4 +134,4 @@ $$
 
 对于坐标$(x,y)$的一个像素跑有4个水平和垂直的相邻像素，分别为$(x +1,y), (x - 1, y), (x, y +1), (x, y - 1)$，这个像素集合、称为
 
-的4邻域，记为$N_4(p)​$
+的4邻域，记为$N_4(p)$
