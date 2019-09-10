@@ -64,7 +64,7 @@ there is two conditions we should make sure:
 
 so, for the aboving condition, the equivalent should be：
 $$
-i + j = m - i + n - j \quad and \quad m \leq n\\
+i + j = m - i + n - j \quad and \quad m \leq n \\
 B[j -1] \leq A[i] \quad and \quad A[i - 1] \leq B[j]
 $$
 the condition $m \leq n$ means $j \geq 0$。
@@ -105,6 +105,3 @@ if the time complexity is $ O(log (min(m+n)))$,we should use binary search to fi
 ```
 
 when it comes to eadge values  **i=0,i=m,j=0,j=n**, where** A[i-1],B[j-1],A[i],B[j]** may not exist.
-
-
-
